@@ -17,7 +17,11 @@ public class Track implements IRenderable {
 
 	@Override
 	public void render(GL2 gl) {
-		// TODO: Render the track by rendering the current and next segment.
+		gl.glPushMatrix();
+		this.currentTrackSegment.render(gl);
+		gl.glTranslated(0.0, 0.0, -TrackSegment.TRACK_LENGTH);
+		this.nextTrackSegment.render(gl);
+		gl.glPopMatrix();
 	}
 
 	@Override
