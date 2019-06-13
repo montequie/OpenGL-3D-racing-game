@@ -83,7 +83,7 @@ public class Materials {
         setTexture(gl, shine, ambient, diffuse, specular);
     }
 
-    public static void setBoxMaterial(GL2 gl) {
+    public static void setWoodenBoxMaterial(GL2 gl) {
         float[] ambient = new float[]{0.4f, 0.4f, 0.4f, 1.0f};
         float[] diffuse = new float[]{0.7f, 0.4f, 0.2f, 1.0f};
         float[] specular = new float[]{0.4f, 0.3f, 0.15f, 1.0f};
