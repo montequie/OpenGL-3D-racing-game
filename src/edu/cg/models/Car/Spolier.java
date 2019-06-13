@@ -48,7 +48,12 @@ public class Spolier implements IRenderable {
 		// TODO Auto-generated method stub
 
 	}
-	
+
+	@Override
+	public void destroy(GL2 gl) {
+
+	}
+
 	@Override
 	public String toString() {
 		return "Spoiler";
