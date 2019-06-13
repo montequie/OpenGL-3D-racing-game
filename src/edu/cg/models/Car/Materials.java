@@ -54,30 +54,6 @@ public class Materials {
         setTexture(gl, shine, col, col);
 	}
 
-    public static void SetGoldMetalMaterial(GL2 gl) {
-        float[] ambient = new float[]{0.24725f, 0.1995f, 0.0745f, 0.5f};
-        float[] diffuse = new float[]{0.75164f, 0.60648f, 0.22648f, 0.5f};
-        float[] specular = new float[]{0.628281f, 0.555802f, 0.366065f, 0.5f};
-        float shine = 0.4f;
-        setTexture(gl, shine, ambient, diffuse, specular);
-    }
-
-    public static void SetChromeMetalMaterial(GL2 gl) {
-        float[] ambient = new float[]{0.25f, 0.25f, 0.25f, 0.31f};
-        float[] diffuse = new float[]{0.4f, 0.4f, 0.4f, 0.31f};
-        float[] specular = new float[]{0.774597f, 0.774597f, 0.774597f, 0.5f};
-        float shine = 0.6f;
-        setTexture(gl, shine, ambient, diffuse, specular);
-    }
-
-    public static void SetJadeMaterial(GL2 gl) {
-        float[] ambient = new float[]{0.135f, 0.2225f, 0.1575f, 1.0f};
-        float[] diffuse = new float[]{0.54f, 0.89f, 0.63f, 1.0f};
-        float[] specular = new float[]{0.316228f, 0.316228f, 0.316228f, 1.0f};
-        float shine = 0.1f;
-        setTexture(gl, shine, ambient, diffuse, specular);
-    }
-
     public static void setGrassMaterial(GL2 gl) {
         float[] ambient = new float[]{0.00f, 0.05f, 0.0f, 1.0f};
         float[] diffuse = new float[]{0.4f, 0.5f, 0.4f, 1.0f};
