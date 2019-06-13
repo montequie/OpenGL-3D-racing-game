@@ -26,7 +26,7 @@ public class GameState {
 	private Timer timer;
 	private final long TIMER_INTERVAL_MS = (long) (1000.0 / 120.0);
 	private final double MAX_ROTATION = 20.0;
-	private final double MAX_TRANSLATION_X = 5;
+	private final double MAX_TRANSLATION_X = 5.0;
 	private final double MAX_VELOCITY = 115.0; // m / sec
 	private final double CAR_ACCELRATION = 30.0; // m / sec^2
 
@@ -119,7 +119,7 @@ public class GameState {
 			double currentCarAccelaration = getCarAccelaration();
 			currentCarAccelaration += -.1 * Math.abs(sinTheta) * CAR_ACCELRATION;
 			double dt = (double) TIMER_INTERVAL_MS / 1000.0; // move from msec -> sec
-			double dr = (currentCarVelocity * dt + currentCarAccelaration * dt * dt);
+            double dr = (currentCarVelocity * dt + currentCarAccelaration * dt * dt);
 			double dz = Math.min(0.0, -cosTheta * dr);
 			double dx = sinTheta * dr;
 			double newVelocity = Math.min(MAX_VELOCITY, currentCarVelocity + cosTheta * currentCarAccelaration * dt);
