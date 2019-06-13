@@ -76,8 +76,9 @@ public class NeedForSpeed implements GLEventListener {
         carCameraTranslation = carCameraTranslation.add(ret);
         double dx = Math.max((double) carCameraTranslation.x, -7.0);
         carCameraTranslation.x = (float) Math.min(dx, 7.0);
-        if ((double) Math.abs(carCameraTranslation.z) >= 10.0 + TrackSegmentLength) {
-            carCameraTranslation.z = -((float) ((double) Math.abs(carCameraTranslation.z) % TrackSegmentLength));
+        // TODO: what is 10.0?
+        if ((double) Math.abs(carCameraTranslation.z) >= 10.0 + TrackSegment.TRACK_LENGTH) {
+            carCameraTranslation.z = -((float) ((double) Math.abs(carCameraTranslation.z) % TrackSegment.TRACK_LENGTH));
             gameTrack.changeTrack(gl);
         }
     }
