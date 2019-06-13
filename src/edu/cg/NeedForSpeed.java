@@ -110,10 +110,10 @@ public class NeedForSpeed implements GLEventListener {
             Vec dir = new Vec(0.0, 1.0, 1.0).normalize();
             float[] pos = new float[]{dir.x, dir.y, dir.z, 0.0f};
             // TODO: check if order is correct
-            gl.glLightfv(light, GL2.GL_AMBIENT, new float[]{0.1f, 0.1f, 0.1f, 1.0f}, 0);
-            gl.glLightfv(light, GL2.GL_DIFFUSE, dayColor, 0);
             gl.glLightfv(light, GL2.GL_SPECULAR, dayColor, 0);
+            gl.glLightfv(light, GL2.GL_DIFFUSE, dayColor, 0);
             gl.glLightfv(light, GL2.GL_POSITION, pos, 0);
+            gl.glLightfv(light, GL2.GL_AMBIENT, new float[]{0.1f, 0.1f, 0.1f, 1.0f}, 0);
             gl.glEnable(light);
         } else {
             // setup moon
