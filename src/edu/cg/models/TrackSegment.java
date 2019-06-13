@@ -95,7 +95,7 @@ public class TrackSegment implements IRenderable {
 		gl.glPopMatrix();
 	}
 
-	// TODO: what is split?
+	// TODO: what is split / parts?
 	private void textureRender(GL2 gl, Texture texture, double width, double depth, int parts, double length) {
         gl.glEnable(GL2.GL_TEXTURE_2D);
         texture.bind(gl);
