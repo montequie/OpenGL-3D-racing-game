@@ -86,7 +86,7 @@ public class TrackSegment implements IRenderable {
 		gl.glPopMatrix();
 
 		// grass rendering
-		Materials.setGreenMaterial(gl);
+		Materials.setGrassMaterial(gl);
 		double deltaX = 15.0;
 		gl.glTranslated(deltaX, 0.0, 0.0);
 		textureRender(gl, grassTexture, GRASS_TEXTURE_WIDTH, GRASS_TEXTURE_DEPTH, 2, TRACK_LENGTH);
