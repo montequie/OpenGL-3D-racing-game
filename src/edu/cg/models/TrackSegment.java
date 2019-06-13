@@ -21,14 +21,12 @@ public class TrackSegment implements IRenderable {
 	public final static double TRACK_LENGTH = 500.0;
 	public final static double BOX_LENGTH = 1.5;
 	private LinkedList<Point> boxesLocations; // Store the boxes centroids (center points) here.
-	// TODO Add additional fields, for example:
-	//		- Add wooden box model (you will only need one object which can be rendered many times)
-	//      - Add grass and asphalt textures.
+	private SkewedBox woodenBox = new SkewedBox(BOX_LENGTH, true);
+    private Texture asphaltTexture;
+    private Texture grassTexture;
 
 	public void setDifficulty(double difficulty) {
-		// TODO: Set the difficulty of the track segment. Here you decide what are the boxes locations.
-		//		 We provide a simple implementation. You can change it if you want. But if you do decide to use it, then it is your responsibility to understand the logic behind it.
-		//       Note: In our implementation, the difficulty is the probability of a box to appear in the scene. 
+		//       Note: In our implementation, the difficulty is the probability of a box to appear in the scene.
 		//             We divide the scene into rows of boxes and we sample boxes according the difficulty probability.
 		difficulty = Math.min(difficulty, 0.95);
 		difficulty = Math.max(difficulty, 0.05);
@@ -75,7 +73,11 @@ public class TrackSegment implements IRenderable {
 
 	@Override
 	public void init(GL2 gl) {
-		// TODO: Initialize textures.
+		woodenBox.init(gl);
+		try {
+		    asphaltTexture = TextureIO.newTexture()
+        }
+
 	}
 
 	public void destroy(GL2 gl) {

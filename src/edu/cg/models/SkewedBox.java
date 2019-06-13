@@ -5,7 +5,7 @@ import com.jogamp.opengl.GL2;
 public class SkewedBox implements IRenderable {
     private double length, height1, height2, depth1, depth2;
 
-    public SkewedBox() {
+    public SkewedBox(double boxLength, boolean b) {
         length = .1;
         height1 = .2;
         height2 = .1;
