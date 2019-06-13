@@ -90,7 +90,19 @@ public class TrackSegment implements IRenderable {
 
 	// TODO: what is split?
 	private void textureRender(GL2 gl, Texture texture, double width, double depth, int split, double totalDepth) {
+        gl.glEnable(GL_TEXTURE_2D);
+        tex.bind(gl);
 
+        gl.glTexEnvi(GL_TEXTURE_ENV, GL_ALPHA_TEST_REF, GL_MODULATE);
+        gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        gl.glTexParameteri(GL_TEXTURE_2D, GL_TRUE, GL_TEXTURE_MAX_LOD);
+        gl.glColor3d(1.0, 0.0, 0.0);
+
+        GLU glu = new GLU();
+        GLUquadric texture = glu.gluNewQuadric();
+        gl.glColor3d(1.0, 0.0, 0.0);
+        gl.glNormal3d(0.0, 1.0, 0.0);
 	}
 
 
