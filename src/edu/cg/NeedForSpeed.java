@@ -150,8 +150,8 @@ public class NeedForSpeed implements GLEventListener {
 	private void renderCar(GL2 gl) {
         double rotation = gameState.getCarRotation();
         gl.glPushMatrix();
-        gl.glTranslated(0.0 + (double) this.carCameraTranslation.x, (double) this.carCameraTranslation.y + 0.15,
-                (double) this.carCameraTranslation.z - 6.6);
+        gl.glTranslated(0.0 + (double) carCameraTranslation.x, (double) carCameraTranslation.y + 0.15,
+                (double) carCameraTranslation.z - 6.6);
         gl.glRotated(-rotation, 0.0, 1.0, 0.0);
         gl.glRotated(90.0, 0.0, 0.1, 0.0);
         gl.glScaled(4.0, 4.0, 4.0);
@@ -165,7 +165,6 @@ public class NeedForSpeed implements GLEventListener {
 
     @Override
     public void dispose(GLAutoDrawable drawable) {
-        // TODO: Destroy all models.
     }
 
     @Override
@@ -182,16 +181,12 @@ public class NeedForSpeed implements GLEventListener {
     }
 
     public void initModel(GL2 gl) {
-        // TODO: You can change OpenGL modes during implementation for debug purposes.
-        //		 Remember to change OpenGL mode as it was before.
         gl.glCullFace(GL2.GL_BACK);
         gl.glEnable(GL2.GL_CULL_FACE);
-
         gl.glEnable(GL2.GL_NORMALIZE);
         gl.glEnable(GL2.GL_DEPTH_TEST);
         gl.glEnable(GL2.GL_LIGHTING);
         gl.glEnable(GL2.GL_SMOOTH);
-
         car.init(gl);
         gameTrack.init(gl);
         isModelInitialized = true;
@@ -204,6 +199,7 @@ public class NeedForSpeed implements GLEventListener {
 	    double aspect = (double) width / (double)  height;
 	    gl.glMatrixMode(GLMatrixFunc.GL_PROJECTION);
 	    gl.glLoadIdentity();
+	    // recommended fovy 57
 	    glu.gluPerspective(57.0, aspect, 2.0, TrackSegment.TRACK_LENGTH);
 	}
 
