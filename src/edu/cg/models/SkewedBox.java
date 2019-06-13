@@ -9,13 +9,11 @@ import com.jogamp.opengl.util.texture.TextureIO;
 import edu.cg.algebra.Vec;
 
 public class SkewedBox implements IRenderable {
-    // TODO: Add you implementation from previous exercise.
-    //       * Note you may want to enable textures here to render
-    //         the wooden boxes.
+    // TODO: fix class
 
     private double length, height1, height2, depth1, depth2;
-    private Texture m_Texture;
-    private boolean m_TextureOn;
+    private Texture texture;
+    private boolean displayTexture;
 
     public SkewedBox() {
         length = .1;
@@ -23,7 +21,7 @@ public class SkewedBox implements IRenderable {
         height2 = .1;
         depth1 = .2;
         depth2 = .1;
-        m_TextureOn = false;
+        displayTexture = false;
     };
 
     public SkewedBox(double length, double h1, double h2, double d1, double d2) {
@@ -32,7 +30,7 @@ public class SkewedBox implements IRenderable {
         this.height2 = h2;
         this.depth1 = d1;
         this.depth2 = d2;
-        m_TextureOn = false;
+        displayTexture = false;
     }
 
     //TODO: change this
@@ -42,13 +40,13 @@ public class SkewedBox implements IRenderable {
         this.depth2 = length;
         this.height1 = length;
         this.height2 = length;
-        m_TextureOn = textureOn;
+        displayTexture = textureOn;
     }
 
     @Override
     public void render(GL2 gl) {
 
-        if (m_TextureOn) setParams(gl);
+        if (displayTexture) setParams(gl);
 
         gl.glNormal3d(1, 0, 0);
         gl.glBegin(GL2.GL_QUADS);
@@ -136,7 +134,7 @@ public class SkewedBox implements IRenderable {
     private void setParams(GL2 gl) {
 
         gl.glEnable(GL2.GL_TEXTURE_2D);
-        m_Texture.bind(gl);
+        texture.bind(gl);
         gl.glTexEnvi(GL2.GL_TEXTURE_ENV, GL2.GL_TEXTURE_ENV_MODE, GL2.GL_MODULATE );
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MIN_FILTER, GL2.GL_LINEAR_MIPMAP_LINEAR );
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MAG_FILTER, GL2.GL_LINEAR );
@@ -148,18 +146,18 @@ public class SkewedBox implements IRenderable {
     @Override
     public void init(GL2 gl) {
 
-        if (m_TextureOn) {
+        if (displayTexture) {
             try {
                 File WoodPic = new File("Textures/WoodBoxTexture.jpg");
-                m_Texture = TextureIO.newTexture(WoodPic, true);
+                texture = TextureIO.newTexture(WoodPic, true);
             } catch (Exception e) {}
         }
     }
 
     @Override
     public void destroy(GL2 gl) {
-        if (m_TextureOn) m_Texture.destroy(gl);
-        m_Texture = null;
+        if (displayTexture) texture.destroy(gl);
+        texture = null;
     }
 
     public String toString() {

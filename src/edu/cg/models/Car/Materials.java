@@ -3,7 +3,6 @@ package edu.cg.models.Car;
 import com.jogamp.opengl.GL2;
 
 public class Materials {
-	// TODO: Use this class to update the color of the vertexes when drawing.
 	private static final float DARK_GRAY[] = { 0.2f, 0.2f, 0.2f };
 	private static final float DARK_RED[] = { 0.25f, 0.01f, 0.01f };
 	private static final float RED[] = { 0.7f, 0f, 0f };
