@@ -61,4 +61,8 @@ public class Center implements IRenderable {
     @Override
     public void init(GL2 gl) {
     }
+
+    @Override
+    public void destroy(GL2 gl) {
+    }
 }
