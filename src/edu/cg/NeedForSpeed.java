@@ -5,6 +5,7 @@ import java.awt.Component;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
+import com.jogamp.opengl.fixedfunc.GLMatrixFunc;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.FPSAnimator;
 
@@ -79,7 +80,19 @@ public class NeedForSpeed implements GLEventListener {
 	}
 
 	private void setupCamera(GL2 gl) {
-		// TODO: Setup the camera.
+		// Camera setup
+        GLU glu = new GLU();
+        double eyeX = this.carCameraTranslation.x;
+        double eyeY = this.carCameraTranslation.y + 1.8; //TODO CONSTANTS
+        double eyeZ = this.carCameraTranslation.z + 2.0; //TODO CONSTANTS
+        double centerX = carCameraTranslation.x;
+        double centerY = carCameraTranslation.x + 1.5;
+        double centerZ = carCameraTranslation.x - 5.0;
+        double upX = 0.0;
+        double upY = 0.7;
+        double upZ = - 0.3;
+        glu.gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
+
 	}
 
 
@@ -96,13 +109,21 @@ public class NeedForSpeed implements GLEventListener {
 	}
 
 	private void renderTrack(GL2 gl) {
-		// TODO: Render the track. 
-		//       * Note: the track shouldn't be translated. It should be fixed.
+	    gl.glPushMatrix();
+	    this.gameTrack.render(gl);
+	    gl.glPopMatrix();
 	}
 
 	private void renderCar(GL2 gl) {
-		// TODO: Render the car.
-		//       * Remember: the car position should be the initial position + the accumulated translation. 
+        double rotation = gameState.getCarRotation();
+        gl.glPushMatrix();
+        gl.glTranslated(0.0 + (double) this.carCameraTranslation.x, (double) this.carCameraTranslation.y + 0.15,
+                (double) this.carCameraTranslation.z - 6.6);
+        gl.glRotated(-rotation, 0.0, 1.0, 0.0);
+        gl.glRotated(90.0, 0.0, 0.1, 0.0);
+        gl.glScaled(4.0, 4.0, 4.0);
+        this.car.render(gl);
+        gl.glPopMatrix();
 	}
 
 	public GameState getGameState() {
@@ -145,8 +166,12 @@ public class NeedForSpeed implements GLEventListener {
 
 	@Override
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
-		// TODO Setup the projection matrix here.
-		//		- It is recommended to use gluPerspective - with fovy 57.0
+	    GL2 gl = drawable.getGL().getGL2();
+	    GLU glu = new GLU();
+	    double aspect = (double) width / (double)  height;
+	    gl.glMatrixMode(GLMatrixFunc.GL_PROJECTION);
+	    gl.glLoadIdentity();
+	    glu.gluPerspective(57.0, aspect, 2.0, TrackSegment.TRACK_LENGTH);
 	}
 
 	/**
