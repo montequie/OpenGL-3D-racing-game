@@ -3,7 +3,6 @@ package edu.cg.models;
 import com.jogamp.opengl.GL2;
 
 /**
- * TODO: We have added new method the interface. Look at the new documentation.
  * A renderable model
  * 
  */

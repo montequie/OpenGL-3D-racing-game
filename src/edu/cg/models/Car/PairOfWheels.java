@@ -34,8 +34,10 @@ public class PairOfWheels implements IRenderable {
 
     @Override
     public void init(GL2 gl) {
-        // TODO Auto-generated method stub
+    }
 
+    @Override
+    public void destroy(GL2 gl) {
     }
 
     @Override

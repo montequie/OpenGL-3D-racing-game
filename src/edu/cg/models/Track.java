@@ -10,7 +10,6 @@ public class Track implements IRenderable {
 	private final double MAXIMUM_DIFFICULTY = 0.95;
 
 	public Track() {
-		// TODO: Initialize the track. We did it for you.
 		currentTrackSegment = new TrackSegment(currentDifficulty);
 		nextTrackSegment = new TrackSegment(currentDifficulty + DIFFICULTY_DELTA);
 	}
@@ -26,7 +25,6 @@ public class Track implements IRenderable {
 
 	@Override
 	public void init(GL2 gl) {
-		// TODO: Initialize the track segments. We already did it for you.
 		// The init method for both segments will load the textures of the models.
 		currentTrackSegment.init(gl);
 		nextTrackSegment.init(gl);
@@ -34,7 +32,6 @@ public class Track implements IRenderable {
 
 	@Override
 	public void destroy(GL2 gl) {
-		// TODO: Destroy the track segments. We already did it for you.
 		// This will destroy the textures of the track segments.
 		// Note if this method is invoked, then you cannot longer render the track -
 		// because the textures are not available.
@@ -44,7 +41,6 @@ public class Track implements IRenderable {
 	}
 
 	public void changeTrack(GL2 gl) {
-		// TODO: Change the current track by switch the current and next track.
 		// - We provided an implementation, you can change it if you want.
 		TrackSegment tmp = currentTrackSegment;
 		currentTrackSegment = nextTrackSegment;
