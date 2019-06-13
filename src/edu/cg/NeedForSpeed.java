@@ -20,18 +20,16 @@ import edu.cg.models.Car.Specification;
  *
  */
 public class NeedForSpeed implements GLEventListener {
-	private GameState gameState = null; // Tracks the car movement and orientation
-	private F1Car car = null; // The F1 car we want to render
-	private Vec carCameraTranslation = null; // The accumulated translation that should be applied on the car, camera
+	private GameState gameState; // Tracks the car movement and orientation
+	private F1Car car; // The F1 car we want to render
+	private Vec carCameraTranslation; // The accumulated translation that should be applied on the car, camera
 												// and light sources
-	private Track gameTrack = null; // The game track we want to render
+	private Track gameTrack; // The game track we want to render
 	private FPSAnimator ani; // This object is responsible to redraw the model with a constant FPS
 	private Component glPanel; // The canvas we draw on.
 	private boolean isModelInitialized = false; // Whether model.init() was called.
 	private boolean isDayMode = true; // Indicates whether the lighting mode is day/night.
-	// TODO: add fields as you want. For example:
-	// - Car initial position (should be fixed).
-	// - Camera initial position (should be fixed)
+	private double TrackSegmentLength = 500.0;
 
 	public NeedForSpeed(Component glPanel) {
 		this.glPanel = glPanel;
@@ -48,16 +46,13 @@ public class NeedForSpeed implements GLEventListener {
 			initModel(gl);
 		}
 		if (isDayMode) {
-			// TODO: Setup background color when day mode is on (You can choose differnt color)
 			gl.glClearColor(0.52f, 0.824f, 1.0f, 1.0f);
 		} else {
-			// TODO: Setup background color when night mode is on (You can choose differnt color)
 			gl.glClearColor(0.0f, 0.0f, 0.32f, 1.0f);
 		}
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();
-		// TODO: This is the flow in which we render the scene. You can use different flow.
 		// Step (1) You should update the accumulated translation that needs to be
 		// applied on the car, camera and light sources.
 		updateCarCameraTranslation(gl);
@@ -77,6 +72,15 @@ public class NeedForSpeed implements GLEventListener {
 		// - You should always keep track on the car offset relative to the starting
 		// point.
 		// - You should change the track segments here.
+		// TODO: rename ret; test constant; why 7?
+		Vec ret = gameState.getNextTranslation();
+		carCameraTranslation = carCameraTranslation.add(ret);
+		double dx = Math.max((double)carCameraTranslation.x, -7.0);
+		carCameraTranslation.x = (float)Math.min(dx, 7.0);
+		if ((double)Math.abs(carCameraTranslation.z) >= 10.0 + TrackSegmentLength) {
+			carCameraTranslation.z = -((float)((double)Math.abs(carCameraTranslation.z) % TrackSegmentLength));
+			gameTrack.changeTrack(gl);
+		}
 	}
 
 	private void setupCamera(GL2 gl) {
