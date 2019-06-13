@@ -66,4 +66,5 @@ public class Center implements IRenderable {
     public void destroy(GL2 gl) {
 
     }
+
 }

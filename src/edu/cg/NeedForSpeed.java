@@ -28,7 +28,6 @@ public class NeedForSpeed implements GLEventListener {
     private Component glPanel; // The canvas we draw on.
     private boolean isModelInitialized = false; // Whether model.init() was called.
     private boolean isDayMode = true; // Indicates whether the lighting mode is day/night.
-    private double TrackSegmentLength = 500.0;
 
     public NeedForSpeed(Component glPanel) {
         this.glPanel = glPanel;
@@ -76,7 +75,7 @@ public class NeedForSpeed implements GLEventListener {
         carCameraTranslation = carCameraTranslation.add(ret);
         double dx = Math.max((double) carCameraTranslation.x, -7.0);
         carCameraTranslation.x = (float) Math.min(dx, 7.0);
-        // TODO: what is 10.0?
+        // TODO: what is 10.0? "dont really need it" - Toolie
         if ((double) Math.abs(carCameraTranslation.z) >= 10.0 + TrackSegment.TRACK_LENGTH) {
             carCameraTranslation.z = -((float) ((double) Math.abs(carCameraTranslation.z) % TrackSegment.TRACK_LENGTH));
             gameTrack.changeTrack(gl);
@@ -86,17 +85,16 @@ public class NeedForSpeed implements GLEventListener {
 	private void setupCamera(GL2 gl) {
 		// Camera setup
         GLU glu = new GLU();
-        double eyeX = this.carCameraTranslation.x;
-        double eyeY = this.carCameraTranslation.y + 1.8; //TODO CONSTANTS
-        double eyeZ = this.carCameraTranslation.z + 2.0; //TODO CONSTANTS
-        double centerX = carCameraTranslation.x;
-        double centerY = carCameraTranslation.x + 1.5;
-        double centerZ = carCameraTranslation.x - 5.0;
+        double eyeX = carCameraTranslation.x + 0.0;
+        double eyeY = carCameraTranslation.y + 1.8; //TODO CONSTANTS
+        double eyeZ = carCameraTranslation.z + 2.0; //TODO CONSTANTS
+        double centerX = carCameraTranslation.x + 0.0;
+        double centerY = carCameraTranslation.y + 1.5;
+        double centerZ = carCameraTranslation.z - 5.0;
         double upX = 0.0;
         double upY = 0.7;
-        double upZ = - 0.3;
+        double upZ = -0.3;
         glu.gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
-
 	}
 
 
@@ -151,7 +149,7 @@ public class NeedForSpeed implements GLEventListener {
 	private void renderCar(GL2 gl) {
         double rotation = gameState.getCarRotation();
         gl.glPushMatrix();
-        gl.glTranslated(0.0 + (double) carCameraTranslation.x, (double) carCameraTranslation.y + 0.15,
+        gl.glTranslated((double) carCameraTranslation.x, (double) carCameraTranslation.y + 0.15,
                 (double) carCameraTranslation.z - 6.6);
         gl.glRotated(-rotation, 0.0, 1.0, 0.0);
         gl.glRotated(90.0, 0.0, 0.1, 0.0);

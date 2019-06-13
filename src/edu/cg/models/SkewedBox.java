@@ -1,19 +1,28 @@
 package edu.cg.models;
 
+import java.io.File;
+
 import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.util.texture.Texture;
+import com.jogamp.opengl.util.texture.TextureIO;
+
+import edu.cg.algebra.Vec;
 
 public class SkewedBox implements IRenderable {
-    private double length, height1, height2, depth1, depth2;
+    // TODO: fix class
 
-    public SkewedBox(double boxLength, boolean b) {
+    private double length, height1, height2, depth1, depth2;
+    private Texture texture;
+    private boolean displayTexture;
+
+    public SkewedBox() {
         length = .1;
         height1 = .2;
         height2 = .1;
         depth1 = .2;
         depth2 = .1;
-    }
-
-    ;
+        displayTexture = false;
+    };
 
     public SkewedBox(double length, double h1, double h2, double d1, double d2) {
         this.length = length;
@@ -21,62 +30,136 @@ public class SkewedBox implements IRenderable {
         this.height2 = h2;
         this.depth1 = d1;
         this.depth2 = d2;
+        displayTexture = false;
+    }
+
+    //TODO: change this
+    public SkewedBox(double length, boolean textureOn) {
+        this.length = length;
+        this.depth1 = length;
+        this.depth2 = length;
+        this.height1 = length;
+        this.height2 = length;
+        displayTexture = textureOn;
     }
 
     @Override
     public void render(GL2 gl) {
-        int numOfVertices = 4;
-        double [] vx, vy, vz;
 
-        vx = new double[]{this.length / 2.0, this.length / 2.0, this.length / 2.0, this.length / 2.0};
-        vy = new double[]{0.0, 0.0, this.height2, this.height2};
-        vz = new double[]{this.depth2 / 2.0, -this.depth2 / 2.0, -this.depth2 / 2.0, this.depth2 / 2.0};
-        drawVertex3D(gl, numOfVertices, 1.0, 0.0, 0.0, vx, vy, vz);
+        if (displayTexture) setParams(gl);
 
-        vx = new double[]{-this.length / 2.0, -this.length / 2.0, -this.length / 2.0, -this.length / 2.0};
-        vy = new double[]{0.0, 0.0, this.height1, this.height1};
-        vz = new double[]{-this.depth1 / 2.0, this.depth1 / 2.0, this.depth1 / 2.0, -this.depth1 / 2.0};
-        drawVertex3D(gl, numOfVertices, -1.0, 0.0, 0.0, vx, vy, vz);
-
-        vx = new double[]{-this.length / 2.0, this.length / 2.0, this.length / 2.0, -this.length / 2.0};
-        vy = new double[]{this.height1, this.height2, this.height2, this.height1};
-        vz = new double[]{this.depth1 / 2.0, this.depth2 / 2.0, -this.depth2 / 2.0, -this.depth1 / 2.0};
-        drawVertex3D(gl, numOfVertices, 0.0, 1.0, 0.0, vx, vy, vz);
-
-        vx = new double[]{-this.length / 2.0, -this.length / 2.0, this.length / 2.0, this.length / 2.0};
-        vy = new double[]{0.0, 0.0, 0.0, 0.0};
-        vz = new double[]{this.depth1 / 2.0, -this.depth1 / 2.0, -this.depth2 / 2.0, this.depth2 / 2.0};
-        drawVertex3D(gl, numOfVertices, 0.0, -1.0, 0.0, vx, vy, vz);
-
-        vy = new double[]{this.height1, 0.0, 0.0, this.height2};
-        vz = new double[]{this.depth1 / 2.0, this.depth1 / 2.0, this.depth2 / 2.0, this.depth2 / 2.0};
-        drawVertex3D(gl, numOfVertices, 0.0, 0.0, 1.0, vx, vy, vz);
-
-        vy = new double[]{0.0, this.height1, this.height2, 0.0};
-        vz = new double[]{-this.depth1 / 2.0, -this.depth1 / 2.0, -this.depth2 / 2.0, -this.depth2 / 2.0};
-        drawVertex3D(gl, numOfVertices, 0.0, 0.0, -1.0, vx, vy, vz);
-    }
-
-    private void drawVertex3D(GL2 gl, int numOfVertices , double  nx, double ny, double nz,
-                              double [] vx, double [] vy, double [] vz) {
-        gl.glNormal3d(nx, ny, nz);
+        gl.glNormal3d(1, 0, 0);
         gl.glBegin(GL2.GL_QUADS);
-        for (int i = 0; i < numOfVertices; i++) {
-            gl.glVertex3d(vx[i], vy[i], vz[i]);
-        }
+        gl.glTexCoord2d(0, 0);
+        gl.glVertex3d(length / 2, 0, depth2 / 2);
+        gl.glTexCoord2d(0, 1);
+        gl.glVertex3d(length / 2, 0, -depth2 / 2);
+        gl.glTexCoord2d(1, 1);
+        gl.glVertex3d(length / 2, height2, -depth2 / 2);
+        gl.glTexCoord2d(1, 0);
+        gl.glVertex3d(length / 2, height2, depth2 / 2);
         gl.glEnd();
+
+        gl.glNormal3d(-1, 0, 0);
+        gl.glBegin(GL2.GL_QUADS);
+        gl.glTexCoord2d(0, 0);
+        gl.glVertex3d(-length / 2, 0, -depth1 / 2);
+        gl.glTexCoord2d(0, 1);
+        gl.glVertex3d(-length / 2, 0, depth1 / 2);
+        gl.glTexCoord2d(1, 1);
+        gl.glVertex3d(-length / 2, height1, depth1 / 2);
+        gl.glTexCoord2d(1, 0);
+        gl.glVertex3d(-length / 2, height1, -depth1 / 2);
+        gl.glEnd();
+
+        Vec normal = new Vec(height1 - height2, 1, 0).normalize();
+
+        gl.glNormal3d(normal.x, normal.y, normal.z);
+        gl.glBegin(GL2.GL_QUADS);
+        gl.glTexCoord2d(0, 0);
+        gl.glVertex3d(-length / 2, height1, depth1 / 2);
+        gl.glTexCoord2d(0, 1);
+        gl.glVertex3d(length / 2, height2, depth2 / 2);
+        gl.glTexCoord2d(1, 1);
+        gl.glVertex3d(length / 2, height2, -depth2 / 2);
+        gl.glTexCoord2d(1, 0);
+        gl.glVertex3d(-length / 2, height1, -depth1 / 2);
+        gl.glEnd();
+
+        gl.glNormal3d(0, -1, 0);
+        gl.glBegin(GL2.GL_QUADS);
+        gl.glTexCoord2d(0, 0);
+        gl.glVertex3d(length / 2, 0, depth1 / 2);
+        gl.glTexCoord2d(0, 1);
+        gl.glVertex3d(-length / 2, 0, -depth1 / 2);
+        gl.glTexCoord2d(1, 1);
+        gl.glVertex3d(length / 2, 0, -depth2 / 2);
+        gl.glTexCoord2d(1, 0);
+        gl.glVertex3d(length / 2, 0, depth2 / 2);
+        gl.glEnd();
+
+        normal = new Vec(depth1 - depth2, 0.0, 1.0).normalize();
+
+        gl.glNormal3d(normal.x, 0, normal.z);
+        gl.glBegin(GL2.GL_QUADS);
+        gl.glTexCoord2d(0, 0);
+        gl.glVertex3d(-length / 2, height1, depth1 / 2);
+        gl.glTexCoord2d(0, 1);
+        gl.glVertex3d(-length / 2, 0, depth1 / 2);
+        gl.glTexCoord2d(1, 1);
+        gl.glVertex3d(length / 2, 0, depth2 / 2);
+        gl.glTexCoord2d(1, 0);
+        gl.glVertex3d(length / 2, height2, depth2 / 2);
+        gl.glEnd();
+
+        normal = new Vec(depth1 - depth2, 0, -1).normalize();
+
+        gl.glNormal3d(normal.x, 0, normal.z);
+        gl.glBegin(GL2.GL_QUADS);
+        gl.glTexCoord2d(0, 0);
+        gl.glVertex3d(-length / 2, 0, -depth1 / 2);
+        gl.glTexCoord2d(0, 1);
+        gl.glVertex3d(-length / 2, height1, -depth1 / 2);
+        gl.glTexCoord2d(1, 1);
+        gl.glVertex3d(length / 2, height2, -depth2 / 2);
+        gl.glTexCoord2d(1, 0);
+        gl.glVertex3d(length / 2, 0, -depth2 / 2);
+        gl.glEnd();
+
+        gl.glDisable(GL2.GL_TEXTURE_2D);
+
     }
+
+    //TODO: change this
+    private void setParams(GL2 gl) {
+
+        gl.glEnable(GL2.GL_TEXTURE_2D);
+        texture.bind(gl);
+        gl.glTexEnvi(GL2.GL_TEXTURE_ENV, GL2.GL_TEXTURE_ENV_MODE, GL2.GL_MODULATE );
+        gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MIN_FILTER, GL2.GL_LINEAR_MIPMAP_LINEAR );
+        gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MAG_FILTER, GL2.GL_LINEAR );
+        gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MAX_LOD, GL2.GL_LINES);
+
+    }
+
 
     @Override
     public void init(GL2 gl) {
+
+        if (displayTexture) {
+            try {
+                File WoodPic = new File("Textures/WoodBoxTexture.jpg");
+                texture = TextureIO.newTexture(WoodPic, true);
+            } catch (Exception e) {}
+        }
     }
 
     @Override
     public void destroy(GL2 gl) {
-
+        if (displayTexture) texture.destroy(gl);
+        texture = null;
     }
 
-    @Override
     public String toString() {
         return "SkewedBox";
     }
