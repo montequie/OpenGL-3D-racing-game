@@ -84,25 +84,48 @@ public class TrackSegment implements IRenderable {
 		gl.glPushMatrix();
 		textureRender(gl, asphaltTexture, ASPHALT_TEXTURE_WIDTH, ASPHALT_TEXTURE_DEPTH, 6, TRACK_LENGTH);
 		gl.glPopMatrix();
-		// grass rendering
 
+		// grass rendering
+		Materials.setGreenMaterial(gl);
+		double deltaX = 15.0;
+		gl.glTranslated(deltaX, 0.0, 0.0);
+		textureRender(gl, grassTexture, GRASS_TEXTURE_WIDTH, GRASS_TEXTURE_DEPTH, 2, TRACK_LENGTH);
+		gl.glTranslated(-2.0 * deltaX, 0.0, 0.0);
+		textureRender(gl, grassTexture, GRASS_TEXTURE_WIDTH, GRASS_TEXTURE_DEPTH, 2, TRACK_LENGTH);
+		gl.glPopMatrix();
 	}
 
 	// TODO: what is split?
-	private void textureRender(GL2 gl, Texture texture, double width, double depth, int split, double totalDepth) {
-        gl.glEnable(GL_TEXTURE_2D);
-        tex.bind(gl);
-
-        gl.glTexEnvi(GL_TEXTURE_ENV, GL_ALPHA_TEST_REF, GL_MODULATE);
-        gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        gl.glTexParameteri(GL_TEXTURE_2D, GL_TRUE, GL_TEXTURE_MAX_LOD);
+	private void textureRender(GL2 gl, Texture texture, double width, double depth, int parts, double length) {
+        gl.glEnable(GL2.GL_TEXTURE_2D);
+        texture.bind(gl);
+        gl.glTexEnvi(GL2.GL_TEXTURE_ENV, GL2.GL_ALPHA_TEST_REF, GL2.GL_MODULATE);
+        gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MIN_FILTER, GL2.GL_LINEAR_MIPMAP_LINEAR);
+        gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MAG_FILTER, GL2.GL_LINEAR);
+        gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TRUE, GL2.GL_TEXTURE_MAX_LOD);
         gl.glColor3d(1.0, 0.0, 0.0);
-
         GLU glu = new GLU();
-        GLUquadric texture = glu.gluNewQuadric();
+        GLUquadric quadric = glu.gluNewQuadric();
         gl.glColor3d(1.0, 0.0, 0.0);
         gl.glNormal3d(0.0, 1.0, 0.0);
+		double d = 1.0 / (double)parts;
+		double deltaZ = depth / (double)parts;
+		double deltaX = width / (double)parts;
+		for (double tz = 0.0; tz < length; tz += depth) {
+			for (double i = 0.0; i < (double)parts; i++) {
+				gl.glBegin(GL2.GL_TRIANGLE_STRIP);
+				for (double j = 0.0; j <= (double)parts; j++) {
+					double x = -width / 2.0 + j * deltaX;
+					gl.glTexCoord2d(j * d, (i + 1.0) * d);
+					gl.glVertex3d(x, 0.0, -tz - (i + 1.0) * deltaZ);
+					gl.glTexCoord2d(j * d, i * d);
+					gl.glVertex3d(x, 0.0, -tz - i * deltaZ);
+				}
+				gl.glEnd();
+			}
+		}
+		glu.gluDeleteQuadric(quadric);
+		gl.glDisable(GL2.GL_TEXTURE_2D);
 	}
 
 
