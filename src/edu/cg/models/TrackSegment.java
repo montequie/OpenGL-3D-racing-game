@@ -71,6 +71,13 @@ public class TrackSegment implements IRenderable {
 	@Override
 	public void render(GL2 gl) {
 		// TODO: Render the track segment
+
+		// boxes rendering
+
+		// asphalt rendering
+
+		// grass rendering
+
 	}
 
 	@Override
