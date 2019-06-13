@@ -15,18 +15,29 @@ public class Materials {
 
 	public static void SetBlackMetalMaterial(GL2 gl) {
 		SetMetalMaterial(gl, BLACK);
+        float shine = 45.5f;
+        setTexture(gl, shine, BLACK, BLACK, BLACK);
 	}
 
 	public static void SetRedMetalMaterial(GL2 gl) {
 		SetMetalMaterial(gl, RED);
+        float shine = 75.2f;
+        setTexture(gl, shine, RED, RED, RED);
 	}
 
 	public static void SetDarkRedMetalMaterial(GL2 gl) {
 		SetMetalMaterial(gl, DARK_RED);
+        SetMetalMaterial(gl, DARK_RED);
+        float shine = 45.5f;
+        setTexture(gl, shine, DARK_RED, DARK_RED, DARK_RED);
 	}
 
 	public static void SetDarkGreyMetalMaterial(GL2 gl) {
 		SetMetalMaterial(gl, DARK_GRAY);
+        SetMetalMaterial(gl, DARK_GRAY);
+        SetMetalMaterial(gl, DARK_GRAY);
+        float shine = 45.5f;
+        setTexture(gl, shine, DARK_GRAY, DARK_GRAY, DARK_GRAY);
 	}
 
 	public static void setMaterialTire(GL2 gl) {
