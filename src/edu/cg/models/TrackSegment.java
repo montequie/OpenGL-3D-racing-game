@@ -70,25 +70,47 @@ public class TrackSegment implements IRenderable {
 	public void render(GL2 gl) {
 		// TODO: Render the track segment
 
-		// boxes rendering
+		// boxes rendering - render box at each given box location
+		Materials.setWoodenBoxMaterial(gl);
+		for (Point p : boxesLocations) {
+			gl.glPushMatrix();
+			gl.glTranslated(p.x, 0.0, p.z);
+			woodenBox.render(gl);
+			gl.glPopMatrix();
+		}
 
 		// asphalt rendering
-
+		Materials.setAsphaltMaterial(gl);
+		gl.glPushMatrix();
+		textureRender(gl, asphaltTexture, ASPHALT_TEXTURE_WIDTH, ASPHALT_TEXTURE_DEPTH, 6, TRACK_LENGTH);
+		gl.glPopMatrix();
 		// grass rendering
 
 	}
+
+	// TODO: what is split?
+	private void textureRender(GL2 gl, Texture texture, double width, double depth, int split, double totalDepth) {
+
+	}
+
 
 	@Override
 	public void init(GL2 gl) {
 		woodenBox.init(gl);
 		try {
-		    asphaltTexture = TextureIO.newTexture()
-        }
-
+			// TODO: change names of pictures
+			asphaltTexture = TextureIO.newTexture(new File("Textures/RoadTexture.jpg"), true);
+			grassTexture = TextureIO.newTexture(new File("Textures/GrassTexture.jpg"), true);
+		}
+		catch (Exception e) {
+			System.err.print(e.getMessage());
+		}
 	}
 
 	public void destroy(GL2 gl) {
-		// TODO: destroy textures.
+		woodenBox.destroy(gl);
+		asphaltTexture.destroy(gl);
+		grassTexture.destroy(gl);
 	}
 
 }
