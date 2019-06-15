@@ -132,7 +132,6 @@ public class SkewedBox implements IRenderable {
 
     //TODO: change this
     private void setParams(GL2 gl) {
-
         gl.glEnable(GL2.GL_TEXTURE_2D);
         texture.bind(gl);
         gl.glTexEnvi(GL2.GL_TEXTURE_ENV, GL2.GL_TEXTURE_ENV_MODE, GL2.GL_MODULATE );
@@ -145,7 +144,6 @@ public class SkewedBox implements IRenderable {
 
     @Override
     public void init(GL2 gl) {
-
         if (displayTexture) {
             try {
                 File WoodPic = new File("Textures/WoodBoxTexture.jpg");

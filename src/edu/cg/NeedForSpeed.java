@@ -65,18 +65,11 @@ public class NeedForSpeed implements GLEventListener {
     }
 
     private void updateCarCameraTranslation(GL2 gl) {
-        // TODO: Update the car and camera translation values (not the
-        // ModelView-Matrix).
-        // - You should always keep track on the car offset relative to the starting
-        // point.
-        // - You should change the track segments here.
-        // TODO: rename ret; test constant; why 7?
         Vec ret = gameState.getNextTranslation();
         carCameraTranslation = carCameraTranslation.add(ret);
         double dx = Math.max((double) carCameraTranslation.x, -7.0);
         carCameraTranslation.x = (float) Math.min(dx, 7.0);
-        // TODO: what is 10.0? "dont really need it" - Toolie
-        if ((double) Math.abs(carCameraTranslation.z) >= 10.0 + TrackSegment.TRACK_LENGTH) {
+        if ((double) Math.abs(carCameraTranslation.z) >= TrackSegment.TRACK_LENGTH) {
             carCameraTranslation.z = -((float) ((double) Math.abs(carCameraTranslation.z) % TrackSegment.TRACK_LENGTH));
             gameTrack.changeTrack(gl);
         }
@@ -107,7 +100,6 @@ public class NeedForSpeed implements GLEventListener {
             float[] dayColor = new float[]{1.0f, 1.0f, 1.0f, 1.0f};
             Vec dir = new Vec(0.0, 1.0, 1.0).normalize();
             float[] pos = new float[]{dir.x, dir.y, dir.z, 0.0f};
-            // TODO: check if order is correct
             gl.glLightfv(light, GL2.GL_SPECULAR, dayColor, 0);
             gl.glLightfv(light, GL2.GL_DIFFUSE, dayColor, 0);
             gl.glLightfv(light, GL2.GL_POSITION, pos, 0);
