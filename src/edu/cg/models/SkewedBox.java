@@ -9,7 +9,6 @@ import com.jogamp.opengl.util.texture.TextureIO;
 import edu.cg.algebra.Vec;
 
 public class SkewedBox implements IRenderable {
-    // TODO: fix class
 
     private double length, height1, height2, depth1, depth2;
     private Texture texture;
@@ -24,7 +23,6 @@ public class SkewedBox implements IRenderable {
         displayTexture = false;
     }
 
-    ;
 
     public SkewedBox(double length, double h1, double h2, double d1, double d2) {
         this.length = length;
@@ -35,14 +33,9 @@ public class SkewedBox implements IRenderable {
         displayTexture = false;
     }
 
-    //TODO: change this
-    public SkewedBox(double length, boolean textureOn) {
-        this.length = length;
-        this.depth1 = length;
-        this.depth2 = length;
-        this.height1 = length;
-        this.height2 = length;
-        displayTexture = textureOn;
+    public SkewedBox(double length, boolean texture) {
+        this.length = this.depth1 = this.depth2 = this.height1 = this.height2 = length;
+        displayTexture = texture;
     }
 
     private void drawVertex3D(GL2 gl, int numOfVertices, double nx, double ny, double nz,

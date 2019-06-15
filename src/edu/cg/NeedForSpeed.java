@@ -75,12 +75,11 @@ public class NeedForSpeed implements GLEventListener {
         }
     }
 
-	private void setupCamera(GL2 gl) {
-		// Camera setup
+    private void setupCamera(GL2 gl) {
         GLU glu = new GLU();
         double eyeX = carCameraTranslation.x + 0.0;
-        double eyeY = carCameraTranslation.y + 1.8; //TODO CONSTANTS
-        double eyeZ = carCameraTranslation.z + 2.0; //TODO CONSTANTS
+        double eyeY = carCameraTranslation.y + 1.8;
+        double eyeZ = carCameraTranslation.z + 2.0;
         double centerX = carCameraTranslation.x + 0.0;
         double centerY = carCameraTranslation.y + 1.5;
         double centerZ = carCameraTranslation.z - 5.0;
@@ -88,7 +87,7 @@ public class NeedForSpeed implements GLEventListener {
         double upY = 0.7;
         double upZ = -0.3;
         glu.gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
-	}
+    }
 
 
     private void setupLights(GL2 gl) {
@@ -112,9 +111,9 @@ public class NeedForSpeed implements GLEventListener {
             // setup 2 spotlights
             int[] spotlight = new int[]{GL2.GL_LIGHT0, GL2.GL_LIGHT1};
             float[] position1 = {0.0f + carCameraTranslation.x, 8.0f + carCameraTranslation.y,
-                                    -0.0f + carCameraTranslation.z, 1.0f};
+                    -0.0f + carCameraTranslation.z, 1.0f};
             float[] position2 = {0.0f + carCameraTranslation.x, 8.0f + carCameraTranslation.y,
-                                    -15.0f + carCameraTranslation.z, 1.0f};
+                    -15.0f + carCameraTranslation.z, 1.0f};
             float[][] positions = new float[][]{position1, position2};
             float[] sunColor = new float[]{0.85f, 0.85f, 0.85f, 1.0f};
             float[] spotDirectionPosition = new float[]{0.0f, -1.0f, 0.0f};
@@ -123,7 +122,7 @@ public class NeedForSpeed implements GLEventListener {
             for (int i = 0; i < spotlight.length; i++) {
                 gl.glLightfv(spotlight[i], GL2.GL_POSITION, positions[i], 0);
                 gl.glLightf(spotlight[i], GL2.GL_SPOT_CUTOFF, 75.0f);
-                gl.glLightfv(spotlight[i], GL2.GL_SPOT_DIRECTION , spotDirectionPosition, 0);
+                gl.glLightfv(spotlight[i], GL2.GL_SPOT_DIRECTION, spotDirectionPosition, 0);
                 gl.glLightfv(spotlight[i], GL2.GL_SPECULAR, sunColor, 0);
                 gl.glLightfv(spotlight[i], GL2.GL_DIFFUSE, sunColor, 0);
                 gl.glEnable(spotlight[i]);
@@ -132,13 +131,13 @@ public class NeedForSpeed implements GLEventListener {
 
     }
 
-	private void renderTrack(GL2 gl) {
-	    gl.glPushMatrix();
-	    this.gameTrack.render(gl);
-	    gl.glPopMatrix();
-	}
+    private void renderTrack(GL2 gl) {
+        gl.glPushMatrix();
+        this.gameTrack.render(gl);
+        gl.glPopMatrix();
+    }
 
-	private void renderCar(GL2 gl) {
+    private void renderCar(GL2 gl) {
         double rotation = gameState.getCarRotation();
         gl.glPushMatrix();
         gl.glTranslated((double) carCameraTranslation.x, (double) carCameraTranslation.y + 0.15,
@@ -148,7 +147,7 @@ public class NeedForSpeed implements GLEventListener {
         gl.glScaled(4.0, 4.0, 4.0);
         this.car.render(gl);
         gl.glPopMatrix();
-	}
+    }
 
     public GameState getGameState() {
         return gameState;
@@ -183,16 +182,16 @@ public class NeedForSpeed implements GLEventListener {
         isModelInitialized = true;
     }
 
-	@Override
-	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
-	    GL2 gl = drawable.getGL().getGL2();
-	    GLU glu = new GLU();
-	    double aspect = (double) width / (double)  height;
-	    gl.glMatrixMode(GLMatrixFunc.GL_PROJECTION);
-	    gl.glLoadIdentity();
-	    // recommended fovy 57
-	    glu.gluPerspective(57.0, aspect, 2.0, TrackSegment.TRACK_LENGTH);
-	}
+    @Override
+    public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
+        GL2 gl = drawable.getGL().getGL2();
+        GLU glu = new GLU();
+        double aspect = (double) width / (double) height;
+        gl.glMatrixMode(GLMatrixFunc.GL_PROJECTION);
+        gl.glLoadIdentity();
+        // recommended fovy 57
+        glu.gluPerspective(57.0, aspect, 2.0, TrackSegment.TRACK_LENGTH);
+    }
 
     /**
      * Start redrawing the scene with 30 FPS
